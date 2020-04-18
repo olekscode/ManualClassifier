@@ -60,6 +60,23 @@ Category >> defaultCondition [
 	^ [ :anObject | true ]
 ]
 
+{ #category : #'as yet unclassified' }
+Category >> gtInspectorItemsIn: composite [
+	<gtInspectorPresentationOrder: 1>
+	composite list 
+		title: 'Items';
+		display: [ self items ].
+]
+
+{ #category : #'as yet unclassified' }
+Category >> gtInspectorTreeIn: composite [
+	<gtInspectorPresentationOrder: 0>
+	composite tree 
+		title: 'Tree';
+		display: [ self ];
+		children: [ :each | each subcategories ].
+]
+
 { #category : #testing }
 Category >> includes: anItem [
 	^ items includes: anItem
@@ -76,4 +93,20 @@ Category >> initialize [
 { #category : #accessing }
 Category >> items [
 	^ items
+]
+
+{ #category : #printing }
+Category >> printOn: aStream [
+	aStream
+		nextPutAll: self class name;
+		nextPut: $(;
+		nextPutAll: items size asString;
+		nextPut: $);
+		space;
+		nextPutAll: condition asString.
+]
+
+{ #category : #accessing }
+Category >> subcategories [
+	^ subcategories
 ]

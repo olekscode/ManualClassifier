@@ -10,8 +10,8 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-Category class >> withCondition: aOneArgumentBlockOrCondition [
-	^ self new condition: aOneArgumentBlockOrCondition; yourself.
+Category class >> withCondition: aOneArgumentBlock [
+	^ self new condition: aOneArgumentBlock; yourself.
 ]
 
 { #category : #visiting }
@@ -50,14 +50,14 @@ Category >> condition [
 ]
 
 { #category : #accessing }
-Category >> condition: aOneArgumentBlockOrCondition [
-	condition := aOneArgumentBlockOrCondition asCondition.
+Category >> condition: aOneArgumentBlock [
+	condition := aOneArgumentBlock
 ]
 
 { #category : #defaults }
 Category >> defaultCondition [
 	"Accept everything by default"
-	^ [ :anObject | true ] asCondition
+	^ [ :anObject | true ]
 ]
 
 { #category : #testing }

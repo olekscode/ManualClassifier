@@ -4,7 +4,8 @@ Class {
 	#instVars : [
 		'items',
 		'subcategories',
-		'condition'
+		'condition',
+		'name'
 	],
 	#category : #ManualClassifier
 }
@@ -12,6 +13,19 @@ Class {
 { #category : #'as yet unclassified' }
 Category class >> withCondition: aOneArgumentBlock [
 	^ self new condition: aOneArgumentBlock; yourself.
+]
+
+{ #category : #'as yet unclassified' }
+Category class >> withName: aName condition: aOneArgumentBlock [
+	^ self new
+		name: aName;
+		condition: aOneArgumentBlock;
+		yourself.
+]
+
+{ #category : #associating }
+Category >> -> aCollectionOfCategories [
+	self addSubcategories: aCollectionOfCategories
 ]
 
 { #category : #visiting }
@@ -31,6 +45,12 @@ Category >> accept: aCollectionOfItems [
 ]
 
 { #category : #'as yet unclassified' }
+Category >> addSubcategories: aCollectionOfCategories [
+	aCollectionOfCategories do: [ :each |
+		self addSubcategory: each ]
+]
+
+{ #category : #'as yet unclassified' }
 Category >> addSubcategoriesByCrossTabulating: oneCondition with: anotherCondition [
 	subcategories := {
 		self class withCondition: (oneCondition and: anotherCondition) .
@@ -42,6 +62,19 @@ Category >> addSubcategoriesByCrossTabulating: oneCondition with: anotherConditi
 { #category : #'as yet unclassified' }
 Category >> addSubcategory: aCategory [
 	subcategories add: aCategory
+]
+
+{ #category : #accessing }
+Category >> allItems [
+	^ subcategories inject: items into: [ :union :each |
+		union union: each allItems ].
+]
+
+{ #category : #'logical operations' }
+Category >> and: anotherCategory [
+	^ self class new
+		condition: (self condition and: anotherCategory condition);
+		yourself
 ]
 
 { #category : #accessing }
@@ -65,7 +98,7 @@ Category >> gtInspectorItemsIn: composite [
 	<gtInspectorPresentationOrder: 1>
 	composite list 
 		title: 'Items';
-		display: [ self items ].
+		display: [ self allItems ].
 ]
 
 { #category : #'as yet unclassified' }
@@ -79,7 +112,7 @@ Category >> gtInspectorTreeIn: composite [
 
 { #category : #testing }
 Category >> includes: anItem [
-	^ items includes: anItem
+	^ self allItems includes: anItem
 ]
 
 { #category : #initialization }
@@ -95,15 +128,39 @@ Category >> items [
 	^ items
 ]
 
+{ #category : #accessing }
+Category >> name [
+	^ name
+]
+
+{ #category : #accessing }
+Category >> name: anObject [
+	name := anObject
+]
+
+{ #category : #'logical operations' }
+Category >> not [
+	^ self class new
+		condition: self condition not;
+		yourself
+]
+
+{ #category : #'logical operations' }
+Category >> or: anotherCategory [
+	^ self class new
+		condition: (self condition or: anotherCategory condition);
+		yourself
+]
+
 { #category : #printing }
 Category >> printOn: aStream [
 	aStream
-		nextPutAll: self class name;
-		nextPut: $(;
+		nextPutAll: (name ifNotNil: [ name ] ifNil: [ self class name ]);
+		nextPutAll: ' (';
+		nextPutAll: self allItems size asString;
+		nextPut: $|;
 		nextPutAll: items size asString;
-		nextPut: $);
-		space;
-		nextPutAll: condition asString.
+		nextPut: $).
 ]
 
 { #category : #accessing }

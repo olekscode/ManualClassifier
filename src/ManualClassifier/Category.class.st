@@ -31,7 +31,7 @@ Category >> -> aCollectionOfCategories [
 { #category : #visiting }
 Category >> accept: aCollectionOfItems [
 	"1. Select items that satisfy the condition of this category"
-	items := aCollectionOfItems asSet select: condition.
+	items := aCollectionOfItems asSet select: self condition.
 	
 	"2. Pass the selected items to subcategories and ask them to check their own conditions"
 	subcategories do: [ :category | category accept: items ].
@@ -155,7 +155,7 @@ Category >> or: anotherCategory [
 { #category : #printing }
 Category >> printOn: aStream [
 	aStream
-		nextPutAll: (name ifNotNil: [ name ] ifNil: [ self class name ]);
+		nextPutAll: (self name ifNotNil: [ self name ] ifNil: [ self class name ]);
 		nextPutAll: ' (';
 		nextPutAll: self allItems size asString;
 		nextPut: $|;

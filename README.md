@@ -30,7 +30,8 @@ category := 'Numbers' ~ [ :object | object isNumber ] -> {
     'Positive' ~ [ :number | number > 0 ] -> { 
         'Even' ~ [ :number | number % 2 = 0 ] .
         'Odd' ~ [ :number | number % 2 = 1 ] } .
-    'Negative' ~ [ :number | number < 0 ] }.
+    'Negative' ~ [ :number | number < 0 ] .
+    'Zero' ~ [ :number | number = 0 ] }.
 	
 numbers := (1 to: 10) collect: [ :i | (1 to: 100) atRandom - 50 ].
 

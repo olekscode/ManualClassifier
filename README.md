@@ -27,10 +27,10 @@ If you are new to baselines and Metacello, check out the [Baselines](https://git
 
 ```Smalltalk
 category := 'Numbers' ~ [ :object | object isNumber ] -> { 
-	'Positive' ~ [ :number | number > 0 ] -> { 
-		'Even' ~ [ :number | number % 2 = 0 ] .
-		'Odd' ~ [ :number | number % 2 = 1 ] } .
-	'Negative' ~ [ :number | number < 0 ] }.
+    'Positive' ~ [ :number | number > 0 ] -> { 
+        'Even' ~ [ :number | number % 2 = 0 ] .
+        'Odd' ~ [ :number | number % 2 = 1 ] } .
+    'Negative' ~ [ :number | number < 0 ] }.
 	
 numbers := (1 to: 10) collect: [ :i | (1 to: 100) atRandom - 50 ].
 

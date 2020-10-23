@@ -34,5 +34,5 @@ category := 'Numbers' ~ [ :object | object isNumber ] -> {
 	
 numbers := (1 to: 10) collect: [ :i | (1 to: 100) atRandom - 50 ].
 
-category accept: numbers.
+(category accept: numbers) inspect.
 ```

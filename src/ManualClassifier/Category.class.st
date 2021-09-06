@@ -120,6 +120,7 @@ Category >> inspectionTree [
 	^ SpTreePresenter new 
 		roots: { self };
 		children: [ :each | each subcategories ];
+		expandAll;
 		yourself.
 ]
 

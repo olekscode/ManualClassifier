@@ -93,23 +93,6 @@ Category >> defaultCondition [
 	^ [ :anObject | true ]
 ]
 
-{ #category : #'as yet unclassified' }
-Category >> gtInspectorItemsIn: composite [
-	<gtInspectorPresentationOrder: 1>
-	composite list 
-		title: 'Items';
-		display: [ self allItems ].
-]
-
-{ #category : #'as yet unclassified' }
-Category >> gtInspectorTreeIn: composite [
-	<gtInspectorPresentationOrder: 0>
-	composite tree 
-		title: 'Tree';
-		display: [ self ];
-		children: [ :each | each subcategories ].
-]
-
 { #category : #testing }
 Category >> includes: anItem [
 	^ self allItems includes: anItem
@@ -121,6 +104,23 @@ Category >> initialize [
 	items := Set new.
 	subcategories := OrderedCollection new.
 	condition := self defaultCondition.
+]
+
+{ #category : #'as yet unclassified' }
+Category >> inspectionItems: aBuilder [
+	<inspectorPresentationOrder: 1 title: 'Items'> 
+	
+	^ self allItems inspectionItems: aBuilder
+]
+
+{ #category : #'as yet unclassified' }
+Category >> inspectionTree [
+	<inspectorPresentationOrder: 0 title: 'Tree'>
+
+	^ SpTreePresenter new 
+		roots: { self };
+		children: [ :each | each subcategories ];
+		yourself.
 ]
 
 { #category : #accessing }
